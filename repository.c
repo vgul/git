@@ -114,6 +114,11 @@ void repo_set_compat_hash_algo(struct repository *repo, int algo)
 		repo_read_loose_object_map(repo);
 }
 
+void repo_set_ref_storage_format(struct repository *repo, int format)
+{
+	repo->ref_storage_format = format;
+}
+
 /*
  * Attempt to resolve and set the provided 'gitdir' for repository 'repo'.
  * Return 0 upon success and a non-zero value upon failure.
@@ -195,6 +200,7 @@ int repo_init(struct repository *repo,
 
 	repo_set_hash_algo(repo, format.hash_algo);
 	repo_set_compat_hash_algo(repo, format.compat_hash_algo);
+	repo_set_ref_storage_format(repo, format.ref_storage_format);
 	repo->repository_format_worktree_config = format.worktree_config;
 
 	/* take ownership of format.partial_clone */
