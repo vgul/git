@@ -180,7 +180,8 @@ int init_db(const char *git_dir, const char *real_git_dir,
 	    int ref_storage_format,
 	    const char *initial_branch, int init_shared_repository,
 	    unsigned int flags);
-void initialize_repository_version(int hash_algo, int reinit);
+void initialize_repository_version(int hash_algo, int ref_storage_format,
+				   int reinit);
 void create_reference_database(int ref_storage_format,
 			       const char *initial_branch, int quiet);
 
