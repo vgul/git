@@ -1919,7 +1919,7 @@ void create_reference_database(const char *initial_branch, int quiet)
 	safe_create_dir(git_path("refs"), 1);
 	adjust_shared_perm(git_path("refs"));
 
-	if (refs_init_db(&err))
+	if (refs_init_db(get_main_ref_store(the_repository), 0, &err))
 		die("failed to set up refs db: %s", err.buf);
 
 	/*
