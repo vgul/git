@@ -12,18 +12,23 @@
 #include "wt-status.h"
 #include "config.h"
 
+void free_worktree(struct worktree *worktree)
+{
+	if (!worktree)
+		return;
+	free(worktree->path);
+	free(worktree->id);
+	free(worktree->head_ref);
+	free(worktree->lock_reason);
+	free(worktree->prune_reason);
+	free(worktree);
+}
+
 void free_worktrees(struct worktree **worktrees)
 {
 	int i = 0;
-
-	for (i = 0; worktrees[i]; i++) {
-		free(worktrees[i]->path);
-		free(worktrees[i]->id);
-		free(worktrees[i]->head_ref);
-		free(worktrees[i]->lock_reason);
-		free(worktrees[i]->prune_reason);
-		free(worktrees[i]);
-	}
+	for (i = 0; worktrees[i]; i++)
+		free_worktree(worktrees[i]);
 	free (worktrees);
 }
 
@@ -74,7 +79,7 @@ static struct worktree *get_main_worktree(void)
 	return worktree;
 }
 
-static struct worktree *get_linked_worktree(const char *id)
+struct worktree *get_linked_worktree(const char *id)
 {
 	struct worktree *worktree = NULL;
 	struct strbuf path = STRBUF_INIT;
